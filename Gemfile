@@ -8,13 +8,20 @@ gem 'coffee-rails', '~> 4.1.0'
 gem 'jquery-rails'
 gem 'jbuilder', '~> 2.0'
 gem 'sdoc', '~> 0.4.0', group: :doc
+gem 'active_model_serializers'
 
 group :development, :test do
   gem 'byebug'
   gem 'pry'
+  gem 'rspec-rails'
+  gem 'responders'
+  gem 'shoulda-matchers'
 end
 
 group :development do
   gem 'web-console', '~> 2.0'
-  gem 'spring'
+end
+
+group :test do
+  gem 'simplecov', :require => false
 end
