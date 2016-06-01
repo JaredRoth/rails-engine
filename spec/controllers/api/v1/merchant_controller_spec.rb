@@ -8,6 +8,17 @@ RSpec.describe Api::V1::MerchantsController, type: :controller do
     assert_response :success
 
     # expect(parsed_json.count).to eq(2)
+  end
 
+  it "#show" do
+    create(:merchant)
+    id = Merchant.first.id
+
+    get :show, id: id, format: :json
+    parsed_json = JSON.parse(response.body)
+
+    assert_response :success
+
+    assert_equal id, parsed_json["id"]
   end
 end
