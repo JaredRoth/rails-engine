@@ -46,4 +46,12 @@ class Api::V1::CustomersController < ApplicationController
   def random
     respond_with Customer.order("RANDOM()").first
   end
+
+  def invoices
+    respond_with Customer.find(params[:id]).invoices
+  end
+
+  def transactions
+    respond_with Transaction.joins(:invoice).where({invoices: {customer_id: params[:id]}})
+  end
 end
