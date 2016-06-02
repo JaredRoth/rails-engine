@@ -46,4 +46,8 @@ class Api::V1::InvoicesController < ApplicationController
 
     end
   end
+
+  def random
+    respond_with Invoice.order("RANDOM()").first
+  end
 end

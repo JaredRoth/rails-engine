@@ -39,4 +39,7 @@ class Api::V1::MerchantsController < ApplicationController
     end
   end
 
+  def random
+    respond_with Merchant.order("RANDOM()").first
+  end
 end
