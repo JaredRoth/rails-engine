@@ -27,4 +27,23 @@ class Api::V1::InvoicesController < ApplicationController
 
     end
   end
+
+  def find_all
+    # respond_with Customer.find_by(params[:paramaters].keys.first params[:paramaters].values.first)
+    if params[:id]
+      respond_with Invoice.where(id: params[:id])
+    elsif params[:status]
+      respond_with Invoice.where(status: params[:status])
+    elsif params[:customer_id]
+      respond_with Invoice.where(customer_id: params[:customer_id])
+    elsif params[:merchant_id]
+      respond_with Invoice.where(merchant_id: params[:merchant_id])
+    elsif params[:created_at]
+      respond_with Invoice.where(created_at: params[:created_at])
+    elsif params[:updated_at]
+      respond_with Invoice.where(updated_at: params[:updated_at])
+    else
+
+    end
+  end
 end
