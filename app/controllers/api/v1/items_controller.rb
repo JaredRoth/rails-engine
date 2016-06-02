@@ -18,7 +18,8 @@ class Api::V1::ItemsController < ApplicationController
     elsif params[:description]
       respond_with Item.find_by(description: params[:description])
     elsif params[:unit_price]
-      respond_with Item.find_by(unit_price: params[:unit_price])
+      string_price = (params[:unit_price].to_d * 100).to_i
+      respond_with Item.find_by(unit_price: string_price)
     elsif params[:merchant_id]
       respond_with Item.find_by(merchant_id: params[:merchant_id])
     elsif params[:created_at]
@@ -39,7 +40,8 @@ class Api::V1::ItemsController < ApplicationController
     elsif params[:description]
       respond_with Item.where(description: params[:description])
     elsif params[:unit_price]
-      respond_with Item.where(unit_price: params[:unit_price])
+      string_price = (params[:unit_price].to_d * 100).to_i
+      respond_with Item.where(unit_price: string_price)
     elsif params[:merchant_id]
       respond_with Item.where(merchant_id: params[:merchant_id])
     elsif params[:created_at]
@@ -53,5 +55,13 @@ class Api::V1::ItemsController < ApplicationController
 
   def random
     respond_with Item.order("RANDOM()").first
+  end
+
+  def invoice_items
+    respond_with Item.find(params[:id]).invoice_items
+  end
+
+  def merchant
+    respond_with Item.find(params[:id]).merchant
   end
 end

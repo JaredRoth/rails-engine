@@ -20,7 +20,8 @@ class Api::V1::InvoiceItemsController < ApplicationController
     elsif params[:quantity]
       respond_with InvoiceItem.find_by(quantity: params[:quantity])
     elsif params[:unit_price]
-      respond_with InvoiceItem.find_by(unit_price: params[:unit_price])
+      string_price = (params[:unit_price].to_d * 100).to_i
+      respond_with InvoiceItem.find_by(unit_price: string_price)
     elsif params[:created_at]
       respond_with InvoiceItem.find_by(created_at: params[:created_at])
     elsif params[:updated_at]
@@ -41,7 +42,8 @@ class Api::V1::InvoiceItemsController < ApplicationController
     elsif params[:quantity]
       respond_with InvoiceItem.where(quantity: params[:quantity])
     elsif params[:unit_price]
-      respond_with InvoiceItem.where(unit_price: params[:unit_price])
+      string_price = (params[:unit_price].to_d * 100).to_i
+      respond_with InvoiceItem.where(unit_price: string_price)
     elsif params[:created_at]
       respond_with InvoiceItem.where(created_at: params[:created_at])
     elsif params[:updated_at]
@@ -53,5 +55,13 @@ class Api::V1::InvoiceItemsController < ApplicationController
 
   def random
     respond_with InvoiceItem.order("RANDOM()").first
+  end
+
+  def item
+    respond_with InvoiceItem.find(params[:id]).item
+  end
+
+  def invoice
+    respond_with InvoiceItem.find(params[:id]).invoice
   end
 end
