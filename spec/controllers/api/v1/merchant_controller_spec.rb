@@ -71,33 +71,37 @@ RSpec.describe Api::V1::MerchantsController, type: :controller do
 
   it "#most_revenue" do
     create(:merchant_with_revenue, invoices_count: 3)
+    create(:merchant_with_revenue, invoices_count: 2)
+    create(:merchant_with_revenue, invoices_count: 1)
 
     get :most_revenue, quantity: 2, format: :json
     parsed_json = JSON.parse(response.body)
 
     assert_response :success
 
-    assert_equal 1, parsed_json.count
+    assert_equal 2, parsed_json.count
     assert_equal "The Gap", parsed_json.first["name"]
   end
 
   it "#most_items" do
-    skip
-    create(:merchant_with_invoices, invoices_count: 3)
+    create(:merchant_with_revenue, invoices_count: 3)
+    create(:merchant_with_revenue, invoices_count: 2)
+    create(:merchant_with_revenue, invoices_count: 1)
 
-    get :most_items, id: Merchant.first.id, format: :json
+    get :most_items, quantity: 2, format: :json
     parsed_json = JSON.parse(response.body)
 
     assert_response :success
 
-    assert_equal 3, parsed_json.count
+    assert_equal 2, parsed_json.count
+    assert_equal "The Gap", parsed_json.first["name"]
   end
 
   it "#revenue" do
     skip
     create(:merchant_with_invoices, invoices_count: 3)
 
-    get :revenue, id: Merchant.first.id, format: :json
+    get :revenue, date: Date.today, format: :json
     parsed_json = JSON.parse(response.body)
 
     assert_response :success
