@@ -21,4 +21,16 @@ RSpec.describe Api::V1::InvoiceItemsController, type: :controller do
 
     assert_equal id, parsed_json["id"]
   end
+
+  it "#find" do
+    create(:invoice_item)
+    id = InvoiceItem.first.id
+
+    get :find, quantity: InvoiceItem.first.quantity, format: :json
+    parsed_json = JSON.parse(response.body)
+
+    assert_response :success
+
+    assert_equal id, parsed_json["id"]
+  end
 end

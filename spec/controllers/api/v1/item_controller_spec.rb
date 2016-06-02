@@ -21,4 +21,16 @@ RSpec.describe Api::V1::ItemsController, type: :controller do
 
     assert_equal id, parsed_json["id"]
   end
+
+  it "#find" do
+    create(:item)
+    id = Item.first.id
+
+    get :find, description: Item.first.description, format: :json
+    parsed_json = JSON.parse(response.body)
+
+    assert_response :success
+
+    assert_equal id, parsed_json["id"]
+  end
 end

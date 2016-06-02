@@ -21,4 +21,16 @@ RSpec.describe Api::V1::CustomersController, type: :controller do
 
     assert_equal id, parsed_json["id"]
   end
+
+  it "#find" do
+    create(:customer)
+    id = Customer.first.id
+
+    get :find, first_name: Customer.first.first_name, format: :json
+    parsed_json = JSON.parse(response.body)
+
+    assert_response :success
+
+    assert_equal id, parsed_json["id"]
+  end
 end

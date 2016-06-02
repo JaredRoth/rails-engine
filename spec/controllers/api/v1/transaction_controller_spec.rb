@@ -21,4 +21,16 @@ RSpec.describe Api::V1::TransactionsController, type: :controller do
 
     assert_equal id, parsed_json["id"]
   end
+
+  it "#find" do
+    create(:transaction)
+    id = Transaction.first.id
+
+    get :find, credit_card_number: Transaction.first.credit_card_number, format: :json
+    parsed_json = JSON.parse(response.body)
+
+    assert_response :success
+
+    assert_equal id, parsed_json["id"]
+  end
 end
