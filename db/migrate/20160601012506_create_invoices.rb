@@ -1,6 +1,6 @@
 class CreateInvoices < ActiveRecord::Migration
   def change
-    enable_extension 'citext'
+    enable_extension "citext"
 
     create_table :invoices do |t|
       t.citext :status
