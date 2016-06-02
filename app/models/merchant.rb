@@ -23,5 +23,5 @@ class Merchant < ActiveRecord::Base
   def revenue
 
   end
-  # GET /api/v1/merchants/:id/revenue
+  # GET /api/v1/merchants/:id/revenue returns the total revenue for that merchant across all transactions
 end

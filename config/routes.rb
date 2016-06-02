@@ -34,6 +34,7 @@ Rails.application.routes.draw do
       get "/merchants/random",            defaults: { format: :json }
       get "/merchants/most_revenue",      defaults: { format: :json }, to: "merchants#most_revenue"
       get "/merchants/most_items",        defaults: { format: :json }, to: "merchants#most_items"
+      get "/merchants/revenue",           defaults: { format: :json }, to: "merchants#date_revenue"
       get "/merchants/:id/items",         defaults: { format: :json }, to: "merchants#items"
       get "/merchants/:id/invoices",      defaults: { format: :json }, to: "merchants#invoices"
 
