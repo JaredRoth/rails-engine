@@ -32,8 +32,10 @@ Rails.application.routes.draw do
       get "/merchants/find",              defaults: { format: :json }
       get "/merchants/find_all",          defaults: { format: :json }
       get "/merchants/random",            defaults: { format: :json }
+      get "/merchants/most_revenue",      defaults: { format: :json }, to: "merchants#most_revenue"
       get "/merchants/:id/items",         defaults: { format: :json }, to: "merchants#items"
       get "/merchants/:id/invoices",      defaults: { format: :json }, to: "merchants#invoices"
+
 
       get "/transactions/find",           defaults: { format: :json }
       get "/transactions/find_all",       defaults: { format: :json }

@@ -52,6 +52,6 @@ class Api::V1::CustomersController < ApplicationController
   end
 
   def transactions
-    respond_with Transaction.joins(:invoice).where({invoices: {customer_id: params[:id]}})
+    respond_with Customer.find(params[:id]).transactions
   end
 end
