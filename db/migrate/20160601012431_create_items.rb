@@ -1,6 +1,6 @@
 class CreateItems < ActiveRecord::Migration
   def change
-    enable_extension 'citext'
+    enable_extension "citext"
 
     create_table :items do |t|
       t.citext :name
