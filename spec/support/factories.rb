@@ -46,6 +46,29 @@ FactoryGirl.define do
         create_list(:invoice, evaluator.invoices_count, merchant: merchant)
       end
     end
+
+    factory :merchant_with_revenue do
+      transient do
+        invoices_count 1
+      end
+
+      after(:create) do |merchant, evaluator|
+        create_list(:invoice_with_invoice_items_and_transactions, evaluator.invoices_count, merchant: merchant)
+      end
+    end
+
+    # factory :merchant_for_favorite do
+    #   transient do
+    #     customers_count 1
+    #   end
+    #
+    #   after(:create) do |merchant, evaluator|
+    #     create_list(
+    #     :customer_with_transactions,
+    #     evaluator.customers_count, merchant: merchant
+    #     )
+    #   end
+    # end
   end
 
   factory :item do
@@ -63,6 +86,16 @@ FactoryGirl.define do
         create_list(:invoice_item, evaluator.invoice_items_count, item: item)
       end
     end
+
+    # factory :item_with_invoice_items_and_transactions do
+    #   transient do
+    #     invoice_items_count 1
+    #   end
+    #
+    #   after(:create) do |item, evaluator|
+    #     create_list(:invoice_item_with_transactions, evaluator.invoice_items_count, item: item)
+    #   end
+    # end
   end
 
   factory :invoice do
@@ -90,6 +123,18 @@ FactoryGirl.define do
       end
     end
 
+    factory :invoice_with_invoice_items_and_transactions do
+      transient do
+        invoice_items_count 2
+        transaction_count 2
+      end
+
+      after(:create) do |invoice, evaluator|
+        create_list(:invoice_item, evaluator.invoice_items_count, invoice: invoice)
+        create_list(:transaction, evaluator.transaction_count, invoice: invoice)
+      end
+    end
+
     factory :invoice_with_items do
       transient do
         items_count 1
@@ -103,6 +148,7 @@ FactoryGirl.define do
 
   factory :transaction do
     invoice
+    result "success"
     credit_card_number "4111111111111111"
     credit_card_expiration_date Date.today
   end
@@ -112,5 +158,15 @@ FactoryGirl.define do
     invoice
     quantity 1
     unit_price 8000
+
+    # factory :invoice_item_with_transactions do
+    #   transient do
+    #     invoice_items_count 1
+    #   end
+    #
+    #   after(:create) do |item, evaluator|
+    #     create_list(:invoice_with_transactions, evaluator.invoice_items_count, item: item)
+    #   end
+    # end
   end
 end

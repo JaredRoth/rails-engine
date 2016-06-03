@@ -1,47 +1,6 @@
 class Api::V1::MerchantsController < ApplicationController
+  include BasicMethods
   respond_to :json
-
-  def index
-    respond_with Merchant.all
-  end
-
-  def show
-    respond_with Merchant.find(params[:id])
-  end
-
-  def find
-    # respond_with Customer.find_by(params[:paramaters].keys.first params[:paramaters].values.first)
-    if params[:id]
-      respond_with Merchant.find_by(id: params[:id])
-    elsif params[:name]
-      respond_with Merchant.find_by(name: params[:name])
-    elsif params[:created_at]
-      respond_with Merchant.find_by(created_at: params[:created_at])
-    elsif params[:updated_at]
-      respond_with Merchant.find_by(updated_at: params[:updated_at])
-    else
-
-    end
-  end
-
-  def find_all
-    # respond_with Customer.find_by(params[:paramaters].keys.first params[:paramaters].values.first)
-    if params[:id]
-      respond_with Merchant.where(id: params[:id])
-    elsif params[:name]
-      respond_with Merchant.where(name: params[:name])
-    elsif params[:created_at]
-      respond_with Merchant.where(created_at: params[:created_at])
-    elsif params[:updated_at]
-      respond_with Merchant.where(updated_at: params[:updated_at])
-    else
-
-    end
-  end
-
-  def random
-    respond_with Merchant.order("RANDOM()").first
-  end
 
   def items
     respond_with Merchant.find(params[:id]).items
@@ -49,5 +8,35 @@ class Api::V1::MerchantsController < ApplicationController
 
   def invoices
     respond_with Merchant.find(params[:id]).invoices
+  end
+
+  def most_revenue
+    respond_with Merchant.most_revenue(params[:quantity])
+  end
+
+  def most_items
+    respond_with Merchant.most_items(params[:quantity])
+  end
+
+  def revenue
+    respond_with Merchant.find(params[:id]).revenue
+  end
+
+  def favorite_customer
+    respond_with Merchant.find(params[:id]).favorite_customer
+  end
+
+  def customers_with_pending_invoices
+    respond_with Merchant.find(params[:id]).customers_with_pending_invoices
+  end
+
+  private
+
+  def model
+    Merchant
+  end
+
+  def s_params
+    params.permit(:id, :name, :created_at, :updated_at)
   end
 end

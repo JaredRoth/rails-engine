@@ -7,6 +7,7 @@ Rails.application.routes.draw do
       get "/customers/random",            defaults: { format: :json }
       get "/customers/:id/invoices",      defaults: { format: :json }, to: "customers#invoices"
       get "/customers/:id/transactions",  defaults: { format: :json }, to: "customers#transactions"
+      get "/customers/:id/favorite_merchant", defaults: { format: :json }, to: "customers#favorite_merchant"
 
       get "/invoice_items/find",          defaults: { format: :json }
       get "/invoice_items/find_all",      defaults: { format: :json }
@@ -26,14 +27,23 @@ Rails.application.routes.draw do
       get "/items/find",                  defaults: { format: :json }
       get "/items/find_all",              defaults: { format: :json }
       get "/items/random",                defaults: { format: :json }
+      get "/items/most_revenue",          defaults: { format: :json }, to: "items#most_revenue"
+      get "/items/most_items",            defaults: { format: :json }, to: "items#most_items"
       get "/items/:id/invoice_items",     defaults: { format: :json }, to: "items#invoice_items"
       get "/items/:id/merchant",          defaults: { format: :json }, to: "items#merchant"
 
       get "/merchants/find",              defaults: { format: :json }
       get "/merchants/find_all",          defaults: { format: :json }
       get "/merchants/random",            defaults: { format: :json }
+      get "/merchants/most_revenue",      defaults: { format: :json }, to: "merchants#most_revenue"
+      get "/merchants/most_items",        defaults: { format: :json }, to: "merchants#most_items"
+      get "/merchants/revenue",           defaults: { format: :json }, to: "merchants#date_revenue"
       get "/merchants/:id/items",         defaults: { format: :json }, to: "merchants#items"
       get "/merchants/:id/invoices",      defaults: { format: :json }, to: "merchants#invoices"
+      get "/merchants/:id/revenue",       defaults: { format: :json }, to: "merchants#revenue"
+      get "/merchants/:id/favorite_customer", defaults: { format: :json }, to: "merchants#favorite_customer"
+      get "/merchants/:id/customers_with_pending_invoices", defaults: { format: :json }, to: "merchants#customers_with_pending_invoices"
+
 
       get "/transactions/find",           defaults: { format: :json }
       get "/transactions/find_all",       defaults: { format: :json }
