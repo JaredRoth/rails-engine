@@ -53,16 +53,6 @@ FactoryGirl.define do
       end
 
       after(:create) do |merchant, evaluator|
-        create_list(:invoice_with_invoice_items, evaluator.invoices_count, merchant: merchant)
-      end
-    end
-
-    factory :merchant_with_sold_items do
-      transient do
-        invoices_count 1
-      end
-
-      after(:create) do |merchant, evaluator|
         create_list(:invoice_with_invoice_items_and_transactions, evaluator.invoices_count, merchant: merchant)
       end
     end
@@ -96,6 +86,16 @@ FactoryGirl.define do
         create_list(:invoice_item, evaluator.invoice_items_count, item: item)
       end
     end
+
+    # factory :item_with_invoice_items_and_transactions do
+    #   transient do
+    #     invoice_items_count 1
+    #   end
+    #
+    #   after(:create) do |item, evaluator|
+    #     create_list(:invoice_item_with_transactions, evaluator.invoice_items_count, item: item)
+    #   end
+    # end
   end
 
   factory :invoice do
@@ -158,5 +158,15 @@ FactoryGirl.define do
     invoice
     quantity 1
     unit_price 8000
+
+    # factory :invoice_item_with_transactions do
+    #   transient do
+    #     invoice_items_count 1
+    #   end
+    #
+    #   after(:create) do |item, evaluator|
+    #     create_list(:invoice_with_transactions, evaluator.invoice_items_count, item: item)
+    #   end
+    # end
   end
 end

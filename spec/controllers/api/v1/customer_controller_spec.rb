@@ -68,4 +68,16 @@ RSpec.describe Api::V1::CustomersController, type: :controller do
 
     assert_equal 3, parsed_json.count
   end
+
+  it "#favorite_merchant" do
+    skip
+    create(:customer_for_favorite)
+
+    get :favorite_customer, id: Merchant.first.id, format: :json
+    parsed_json = JSON.parse(response.body)
+
+    assert_response :success
+
+    assert_equal "Jim", parsed_json["name"]
+  end
 end

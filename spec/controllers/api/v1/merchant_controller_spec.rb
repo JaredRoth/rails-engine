@@ -84,9 +84,9 @@ RSpec.describe Api::V1::MerchantsController, type: :controller do
   end
 
   it "#most_items" do
-    create(:merchant_with_sold_items, invoices_count: 3, name: "Most")
-    create(:merchant_with_sold_items, invoices_count: 2)
-    create(:merchant_with_sold_items, invoices_count: 1, name: "Least")
+    create(:merchant_with_revenue, invoices_count: 3, name: "Most")
+    create(:merchant_with_revenue, invoices_count: 2)
+    create(:merchant_with_revenue, invoices_count: 1, name: "Least")
 
     get :most_items, quantity: 2, format: :json
     parsed_json = JSON.parse(response.body)
@@ -111,7 +111,7 @@ RSpec.describe Api::V1::MerchantsController, type: :controller do
   end
 
   it "#revenue without date" do
-    create(:merchant_with_sold_items, invoices_count: 1)
+    create(:merchant_with_revenue, invoices_count: 1)
 
     get :revenue, id: Merchant.first.id, format: :json
     parsed_json = JSON.parse(response.body)
@@ -123,7 +123,7 @@ RSpec.describe Api::V1::MerchantsController, type: :controller do
 
   it "#revenue with date" do
     skip
-    create(:merchant_with_sold_items, invoices_count: 1)
+    create(:merchant_with_revenue, invoices_count: 1)
 
     get :revenue, id: Merchant.first.id, date: Date.today, format: :json
     parsed_json = JSON.parse(response.body)
@@ -143,5 +143,9 @@ RSpec.describe Api::V1::MerchantsController, type: :controller do
     assert_response :success
 
     assert_equal "Jim", parsed_json["name"]
+  end
+
+  it "#customers_with_pending_invoices" do
+    skip
   end
 end

@@ -2,10 +2,12 @@ class Merchant < ActiveRecord::Base
   has_many :items
   has_many :invoices
   has_many :invoice_items, through: :invoices
+  has_many :transactions, through: :invoices
   has_many :customers, through: :invoices
 
   def self.most_revenue(qty)
-    joins(:invoice_items).group(:id)
+    joins(invoices: [:transactions, :invoice_items])
+    .where(transactions: {result: "success"}).group(:id)
     .order("sum(invoice_items.quantity * invoice_items.unit_price)DESC")
     .limit(qty)
   end
@@ -33,5 +35,10 @@ class Merchant < ActiveRecord::Base
     .where(transactions: {result: "success"})
     .joins(:transactions).group('customers.id')
     .order('transactions_count DESC').first
+  end
+
+  def customers_with_pending_invoices
+    customers.where.not(transactions: {result: "success"})
+    .joins(:transactions).group(:id)
   end
 end
