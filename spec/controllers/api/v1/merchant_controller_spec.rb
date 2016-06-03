@@ -70,32 +70,27 @@ RSpec.describe Api::V1::MerchantsController, type: :controller do
   end
 
   it "#most_revenue" do
-    create(:merchant_with_revenue, invoices_count: 3)
-    create(:merchant_with_revenue, invoices_count: 2)
-    create(:merchant_with_revenue, invoices_count: 1)
+    create(:merchant_with_revenue)
 
-    get :most_revenue, quantity: 2, format: :json
+    get :most_revenue, quantity: 1, format: :json
     parsed_json = JSON.parse(response.body)
 
     assert_response :success
 
-    assert_equal 2, parsed_json.count
-    assert_equal "The Gap", parsed_json.first["name"]
+    assert_equal 1, parsed_json.count
+    assert_equal ["id", "name"], parsed_json.first.keys
   end
 
   it "#most_items" do
-    create(:merchant_with_revenue, invoices_count: 3, name: "Most")
-    create(:merchant_with_revenue, invoices_count: 2)
-    create(:merchant_with_revenue, invoices_count: 1, name: "Least")
+    create(:merchant_with_revenue)
 
-    get :most_items, quantity: 2, format: :json
+    get :most_items, quantity: 1, format: :json
     parsed_json = JSON.parse(response.body)
 
     assert_response :success
 
-    assert_equal 2, parsed_json.count
-    assert_equal "Most", parsed_json.first["name"]
-    #after changing to expect() syntax, add refution
+    assert_equal 1, parsed_json.count
+    assert_equal ["id", "name"], parsed_json.first.keys
   end
 
   it "#date_revenue" do
