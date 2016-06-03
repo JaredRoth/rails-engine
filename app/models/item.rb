@@ -12,8 +12,7 @@ class Item < ActiveRecord::Base
   end
 
   def self.most_items(qty)
-    joins(invoices: [:transactions, :invoice_items])
-    .where(invoices: {status: "shipped"}).group(:id)
+    joins(:invoice_items).group(:id)
     .order("sum(invoice_items.quantity)DESC").limit(qty)
   end
 end
