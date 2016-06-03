@@ -2,6 +2,7 @@ class Merchant < ActiveRecord::Base
   has_many :items
   has_many :invoices
   has_many :invoice_items, through: :invoices
+  has_many :customers, through: :invoices
 
   def self.most_revenue(qty)
     joins(:invoice_items).group(:id)
@@ -21,7 +22,16 @@ class Merchant < ActiveRecord::Base
   end
 
   def revenue
-
+    total = invoices.joins(:transactions, :invoice_items)
+    .where(transactions: {result: "success"})
+    .sum("invoice_items.quantity * invoice_items.unit_price")
+    {"revenue" => (total/100.0).to_s}
   end
-  # GET /api/v1/merchants/:id/revenue returns the total revenue for that merchant across all transactions
+
+  def favorite_customer
+    customers.select('customers.*, COUNT(transactions.id) AS transactions_count')
+    .where(transactions: {result: "success"})
+    .joins(:transactions).group('customers.id')
+    .order('transactions_count DESC').first
+  end
 end

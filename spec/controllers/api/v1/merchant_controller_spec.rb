@@ -111,13 +111,37 @@ RSpec.describe Api::V1::MerchantsController, type: :controller do
   end
 
   it "#revenue without date" do
-    create(:merchant_with_revenue, invoices_count: 1)
+    create(:merchant_with_sold_items, invoices_count: 1)
 
     get :revenue, id: Merchant.first.id, format: :json
     parsed_json = JSON.parse(response.body)
 
     assert_response :success
 
-    assert_equal 3, parsed_json.count
+    assert_equal "320.0", parsed_json["revenue"]
+  end
+
+  it "#revenue with date" do
+    skip
+    create(:merchant_with_sold_items, invoices_count: 1)
+
+    get :revenue, id: Merchant.first.id, date: Date.today, format: :json
+    parsed_json = JSON.parse(response.body)
+
+    assert_response :success
+
+    assert_equal "320.0", parsed_json["revenue"]
+  end
+
+  it "#favorite_customer" do
+    skip
+    create(:merchant_for_favorite)
+
+    get :favorite_customer, id: Merchant.first.id, format: :json
+    parsed_json = JSON.parse(response.body)
+
+    assert_response :success
+
+    assert_equal "Jim", parsed_json["name"]
   end
 end

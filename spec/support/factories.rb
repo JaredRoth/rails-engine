@@ -66,6 +66,19 @@ FactoryGirl.define do
         create_list(:invoice_with_invoice_items_and_transactions, evaluator.invoices_count, merchant: merchant)
       end
     end
+
+    # factory :merchant_for_favorite do
+    #   transient do
+    #     customers_count 1
+    #   end
+    #
+    #   after(:create) do |merchant, evaluator|
+    #     create_list(
+    #     :customer_with_transactions,
+    #     evaluator.customers_count, merchant: merchant
+    #     )
+    #   end
+    # end
   end
 
   factory :item do
